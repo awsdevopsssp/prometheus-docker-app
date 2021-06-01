@@ -1,0 +1,30 @@
+version: '3'
+
+networks:
+  p-network:
+
+services:
+    # prometheus node
+    prometheus:
+      image: prom/prometheus
+      volumes:
+        - ./configs:/etc/prometheus/
+      command:
+        - '--config.file=/etc/prometheus/docker.yml'
+      ports:
+        - 9090:9090
+      networks:
+        - p-network
+      restart: always
+
+    web:
+      image: infracloudio/csvserver:latest
+      environment: 
+          CSVSERVER_BORDER: 0
+      ports:
+        - "9300:9300"
+      volumes:
+        - ./inputFile:/csvserver/inputdata
+      networks:
+        - p-network
+      
