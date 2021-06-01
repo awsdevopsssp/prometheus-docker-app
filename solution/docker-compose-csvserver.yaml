@@ -1,0 +1,9 @@
+services:
+  web:
+    image: infracloudio/csvserver:latest
+    environment: 
+        CSVSERVER_BORDER: 0
+    ports:
+      - "9300:9300"
+    volumes:
+      - ./inputFile:/csvserver/inputdata
